@@ -82,6 +82,9 @@ class Image:
         file_name = list(uploaded.keys())[0]
         self.org_ct_img = sitk.ReadImage(file_name)
 
+    def read_path(self, file_path):
+        self.org_ct_img = sitk.ReadImage(file_path)
+
     def detect_heart(self):
         # Resize org ct
         old_size = np.asarray(self.org_ct_img.GetSize()).astype('float')
