@@ -23,14 +23,14 @@ def draw_caption(image, box, caption):
 
 
 def visualize(pic, bbox, caption, selected):
-    pic = (pic * 255).astype('uint8')
-    draw_caption(pic, bbox, caption)
-    x1, y1, x2, y2 = bbox
-    if selected:
-        cv2.rectangle(pic, (x1, y1), (x2, y2), color=(0, 255, 0), thickness=2)
-    else:
-        cv2.rectangle(pic, (x1, y1), (x2, y2), color=(0, 0, 255), thickness=1)
-    return pic
+	pic = (pic * 255).astype('uint8')
+	draw_caption(pic, bbox, caption)
+	x1, y1, x2, y2 = bbox
+	if selected:
+		cv2.rectangle(pic,(int(x1), int(y1)), (int(x2), int(y2)), (0, 255, 0), thickness=2)
+	else:
+		cv2.rectangle(pic, (int(x1), int(y1)), (int(x2), int(y2)), (0, 0, 255), thickness=1)
+	return pic
 
 
 def calc_iou(a, b):
