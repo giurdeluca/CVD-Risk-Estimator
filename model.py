@@ -342,12 +342,12 @@ class Model:
             restore_iter = self.restore_iter
         self.encoder.load_state_dict(torch.load(osp.join(
             'checkpoint',
-            '{}-{:0>5}-encoder.ptm'.format(self.save_name, restore_iter))))
+            '{}-{:0>5}-encoder.ptm'.format(self.save_name, restore_iter))), weights_only=True)
         opt_path = osp.join(
             'checkpoint',
             '{}-{:0>5}-optimizer.ptm'.format(self.save_name, restore_iter))
         if osp.isfile(opt_path):
-            self.optimizer.load_state_dict(torch.load(opt_path))
+            self.optimizer.load_state_dict(torch.load(opt_path), weights_only=True)
 
     def load_pretrain(self):
-        self.encoder.load_state_dict(torch.load(self.prt_path), False)
+        self.encoder.load_state_dict(torch.load(self.prt_path), False, weights_only=True)
