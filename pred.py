@@ -16,7 +16,7 @@ parser.add_argument('--path', default='./demos/Positive_CAC_1.npy', type=str,
                     help='path: path of the input image. Default: ./demos/Positive_CAC_1.npy')
 opt = parser.parse_args()
 
-os.environ["CUDA_VISIBLE_DEVICES"] = "0"
+#os.environ["CUDA_VISIBLE_DEVICES"] = "0" #to use it with CPU
 
 m = init_model()
 m.load_model(opt.iter)
