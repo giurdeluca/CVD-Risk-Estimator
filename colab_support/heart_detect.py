@@ -119,7 +119,8 @@ def detector(whole_img):
     visual_bbox = list()
     for j in range(frame_num - 1, -1, -1):
         pic = np.tile(np.expand_dims(whole_img[j], axis=2), (1, 1, 3))
-        torch_pic = torch.Tensor(pic).cuda().float()
+        #torch_pic = torch.Tensor(pic).cuda().float()
+        torch_pic = torch.Tensor(pic).to(device='cpu').float()
         torch_pic = torch_pic.unsqueeze(0).permute(0, 3, 1, 2).contiguous()
 
         with torch.no_grad():
