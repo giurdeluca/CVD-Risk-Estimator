@@ -33,6 +33,6 @@ def load_model(m):
 
     print('Loading model parameters...')
     m.encoder.load_state_dict(
-        torch.load(param_name))
+        torch.load(param_name, weights_only=False))
     print('Model initialized.')
     return m
