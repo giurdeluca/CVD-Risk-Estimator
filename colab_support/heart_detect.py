@@ -1,6 +1,8 @@
 # -*- coding: utf-8 -*-
 # @Author  : chq_N
 # @Time    : 2019/12/10
+os.environ["CUDA_VISIBLE_DEVICES"] = "" # Force CPU
+print("CUDA_VISIBLE_DEVICES set to:", os.environ.get("CUDA_VISIBLE_DEVICES"))
 
 import os.path as osp
 from copy import deepcopy
@@ -10,6 +12,7 @@ import os
 import cv2
 import numpy as np
 import torch
+print("torch.cuda.is_available():", torch.cuda.is_available())
 import zipfile
 from google.colab import auth
 from googleapiclient.discovery import build
@@ -97,7 +100,8 @@ def load_detector():
         zip_ref.extractall('./')
     print('Loading the heart detector...')
     os.chdir(proj_name)
-    model = torch.load(model_name, weights_only=True)
+    model = torch.load(model_name, map_location=torch.device('cpu'),weights_only=True)
+
     os.chdir('../')
     return model
 

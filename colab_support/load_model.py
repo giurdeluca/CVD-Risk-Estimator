@@ -1,10 +1,12 @@
 # -*- coding: utf-8 -*-
 # @Author  : chq_N
 # @Time    : 2020/8/29
-
+os.environ["CUDA_VISIBLE_DEVICES"] = "" # Force CPU
+print("CUDA_VISIBLE_DEVICES set to:", os.environ.get("CUDA_VISIBLE_DEVICES"))
 import io
 import os.path as osp
 import torch
+print("torch.cuda.is_available():", torch.cuda.is_available())
 
 from googleapiclient.http import MediaIoBaseDownload
 from google.colab import auth
