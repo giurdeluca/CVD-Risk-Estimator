@@ -109,7 +109,8 @@ def load_detector():
 def detector(whole_img):
     retinanet = load_detector()
     print('Detecting heart...')
-    retinanet = retinanet.cuda()
+    #retinanet = retinanet.cuda()
+    retinanet = retinanet.to(device='cpu')
     retinanet.eval()
 
     frame_num = whole_img.shape[0]
