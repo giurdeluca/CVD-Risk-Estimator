@@ -1,3 +1,5 @@
+import os
+os.environ["CUDA_VISIBLE_DEVICES"] = ""  # This should be first
 import io
 import os.path as osp
 
