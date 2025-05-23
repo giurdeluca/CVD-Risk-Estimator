@@ -9,11 +9,14 @@ from datetime import datetime
 import cv2
 import matplotlib.pyplot as plt
 import numpy as np
+os.environ["CUDA_VISIBLE_DEVICES"] = "" # Force CPU
+print("CUDA_VISIBLE_DEVICES set to:", os.environ.get("CUDA_VISIBLE_DEVICES"))
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
 import torch.optim as optim
 import torch.utils.data as tordata
+print("torch.cuda.is_available():", torch.cuda.is_available())
 from mpl_toolkits.axes_grid1 import ImageGrid
 from scipy.ndimage import gaussian_filter
 # from apex import amp
@@ -56,8 +59,12 @@ class Model:
         self.accumulate_steps = accumulate_steps
         self.prt_path = prt_path
 
-        encoder = Tri2DNet(dout=self.dout).cuda()
-        ce = nn.CrossEntropyLoss(reduction='none').cuda()
+        device = 'cpu'  # or 'cuda' for GPU
+
+        #encoder = Tri2DNet(dout=self.dout).cuda()
+        #ce = nn.CrossEntropyLoss(reduction='none').cuda()
+        encoder = Tri2DNet(dout=self.dout).to(device)
+        ce = nn.CrossEntropyLoss(reduction='none').to(device)
 
         att_id = []
         aux_id = []
@@ -342,12 +349,12 @@ class Model:
             restore_iter = self.restore_iter
         self.encoder.load_state_dict(torch.load(osp.join(
             'checkpoint',
-            '{}-{:0>5}-encoder.ptm'.format(self.save_name, restore_iter))), weights_only=True)
+            '{}-{:0>5}-encoder.ptm'.format(self.save_name, restore_iter))), map_location='cpu', weights_only=True)
         opt_path = osp.join(
             'checkpoint',
             '{}-{:0>5}-optimizer.ptm'.format(self.save_name, restore_iter))
         if osp.isfile(opt_path):
-            self.optimizer.load_state_dict(torch.load(opt_path), weights_only=True)
+            self.optimizer.load_state_dict(torch.load(opt_path), map_location='cpu', weights_only=True)
 
     def load_pretrain(self):
-        self.encoder.load_state_dict(torch.load(self.prt_path), False, weights_only=True)
+        self.encoder.load_state_dict(torch.load(self.prt_path), False, map_location='cpu', weights_only=True)
