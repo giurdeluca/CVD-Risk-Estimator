@@ -2,9 +2,12 @@
 # @Author  : chq_N
 # @Time    : 2020/12/10
 
-# Heatmap Visualization with Grad-CAM
-
+# Heatmap Visualization with Grad-CA
+import os
+os.environ["CUDA_VISIBLE_DEVICES"] = "" # Force CPU
+print("CUDA_VISIBLE_DEVICES set to:", os.environ.get("CUDA_VISIBLE_DEVICES"))
 import torch.nn as nn
+print("torch.cuda.is_available():", torch.cuda.is_available())
 
 from net import AttBranch, Branch
 

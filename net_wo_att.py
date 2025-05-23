@@ -1,11 +1,12 @@
 # -*- coding: utf-8 -*-
 # @Author  : chq_N
 # @Time    : 2020/8/29
-
+os.environ["CUDA_VISIBLE_DEVICES"] = "" # Force CPU
+print("CUDA_VISIBLE_DEVICES set to:", os.environ.get("CUDA_VISIBLE_DEVICES"))
 import torch
 import torch.nn as nn
 import torchvision.models as models
-
+print("torch.cuda.is_available():", torch.cuda.is_available())
 
 class Branch(nn.Module):
     def __init__(self, num_classes=2, dout=False):
