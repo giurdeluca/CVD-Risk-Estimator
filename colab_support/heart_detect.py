@@ -100,17 +100,21 @@ def load_detector():
         zip_ref.extractall('./')
     print('Loading the heart detector...')
     os.chdir(proj_name)
-    model = torch.load(model_name, map_location=torch.device('cpu'),weights_only=False)
-
+    device = torch.device('cpu')
+    model = torch.load(model_name, map_location=device, weights_only=False)
+    
+    # Ensure model is on CPU
+    model = model.to(device)
     os.chdir('../')
     return model
 
 
 def detector(whole_img):
+    device = torch.device('cpu')
     retinanet = load_detector()
     print('Detecting heart...')
     #retinanet = retinanet.cuda()
-    retinanet = retinanet.to(device='cpu')
+    retinanet = retinanet.to(device)
     retinanet.eval()
 
     frame_num = whole_img.shape[0]
@@ -120,7 +124,7 @@ def detector(whole_img):
     for j in range(frame_num - 1, -1, -1):
         pic = np.tile(np.expand_dims(whole_img[j], axis=2), (1, 1, 3))
         #torch_pic = torch.Tensor(pic).cuda().float()
-        torch_pic = torch.Tensor(pic).to(device='cpu').float()
+        torch_pic = torch.Tensor(pic).to(device).float()
         torch_pic = torch_pic.unsqueeze(0).permute(0, 3, 1, 2).contiguous()
 
         with torch.no_grad():
