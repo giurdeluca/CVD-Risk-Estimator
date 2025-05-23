@@ -43,7 +43,8 @@ class Model:
             val_source,
             test_source,
             accumulate_steps,
-            prt_path, ):
+            prt_path,
+            device='cpu',):
 
         self.dout = dout
         self.lr = lr
@@ -58,8 +59,7 @@ class Model:
         self.test_source = test_source
         self.accumulate_steps = accumulate_steps
         self.prt_path = prt_path
-
-        device = 'cpu'  # or 'cuda' for GPU
+        self.device = torch.device(device)  # Store device
 
         #encoder = Tri2DNet(dout=self.dout).cuda()
         #ce = nn.CrossEntropyLoss(reduction='none').cuda()
@@ -125,13 +125,13 @@ class Model:
             self.optimizer.zero_grad()
 
             (pred, aux_pred_sagittal, aux_pred_coronal,
-             aux_pred_axial) = self.encoder(volumes.cuda())
+             aux_pred_axial) = self.encoder(volumes.to(device)())
 
             labels = (labels > 0).int()
-            main_ce_loss = self.ce(pred, labels.cuda().long()).mean()
-            sagittal_ce_loss = self.ce(aux_pred_sagittal, labels.cuda().long()).mean()
-            axial_ce_loss = self.ce(aux_pred_axial, labels.cuda().long()).mean()
-            coronal_ce_loss = self.ce(aux_pred_coronal, labels.cuda().long()).mean()
+            main_ce_loss = self.ce(pred, labels.to(device)().long()).mean()
+            sagittal_ce_loss = self.ce(aux_pred_sagittal, labels.to(device)().long()).mean()
+            axial_ce_loss = self.ce(aux_pred_axial, labels.to(device)().long()).mean()
+            coronal_ce_loss = self.ce(aux_pred_coronal, labels.to(device)().long()).mean()
             total_loss = (main_ce_loss + sagittal_ce_loss + axial_ce_loss + coronal_ce_loss) / 4
             _total_loss = total_loss.cpu().data.numpy()
             self.loss.append(_total_loss)
@@ -207,7 +207,7 @@ class Model:
         with torch.no_grad():
             for i, x in enumerate(data_loader):
                 volumes, labels = x
-                volumes = volumes.cuda()
+                volumes = volumes.to(device)()
                 b_s = volumes.size()[0]
                 _v = []
                 for _c in crop:
@@ -246,7 +246,7 @@ class Model:
         get_crop([])
 
         with torch.no_grad():
-            volumes = volumes.cuda()
+            volumes = volumes.to(device)()
             volumes = volumes.unsqueeze(0)
             _v = []
             for _c in crop:
@@ -298,10 +298,10 @@ class Model:
 
         volumes = volumes.unsqueeze(0)
         grad_cam.model.zero_grad()
-        pred = grad_cam(volumes.cuda())
+        pred = grad_cam(volumes.to(device)())
         one_hot = torch.zeros(pred.size())
         one_hot[:, 1] = 1
-        one_hot = one_hot.cuda().float()
+        one_hot = one_hot.to(device)().float()
         y = (one_hot * pred).sum()
         y.backward()
 
