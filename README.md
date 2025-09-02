@@ -1,3 +1,19 @@
+# Personal notes
+## Install
+```shell
+git clone 
+cd CVD-Risk-Estimator
+pip install -r requirements
+pip3 install torch==1.8.1+cu111 torchvision==0.9.1+cu111 torchaudio==0.8.1 -f https://download.pytorch.org/whl/torch_stable.html
+```
+
+## Run
+- pred_batch_updated_map.py assumes BIDS are given as input (also the output will be a BIDS-derived directory) and takes as input the list of path to images
+- pred.py is the authors script but there are naming issues to be fixed for the generated pndìg
+
+## Some clarifications
+Some scripts that were in the colab_support originally have been edited and copied in the project directory in order to make the script run.
+
 # Tri2D-Net for CVD Risk Estimation
 
 [![DOI](https://zenodo.org/badge/256093026.svg)](https://zenodo.org/badge/latestdoi/256093026)
