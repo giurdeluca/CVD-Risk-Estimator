@@ -1,5 +1,4 @@
-# Personal notes
-## Overview
+# Overview
 This application processes CT images in NIfTI format (`.nii.gz`) to:
 1. **Detect and localize the heart** using automated bounding box detection
 2. **Extract heart slices** and create visual detection outputs
@@ -9,16 +8,16 @@ This application processes CT images in NIfTI format (`.nii.gz`) to:
 
 
 
-## Installation
+# Installation
 
-### Prerequisites
+## Prerequisites
 
 - Python 3.8
 - PyTorch 1.8
 - Computing device with GPU
 
 
-### Local Installation
+## Local Installation
 1. Clone repo and install the requirements
 ```bash
 git clone <repository-url>
@@ -42,11 +41,11 @@ pip install torch==1.8.1+cu111 torchvision==0.9.1+cu111 torchaudio==0.8.1 \
 docker build -t cvd-risk-estimator .
 ```
 
-## Usage
+# Usage
 
-### Input Requirements
+## Input Requirements
 
-1. **CT Images**: NIfTI format (`.nii.gz`) containing cardiac CT scans
+1. **CT Images**: NIfTI format (`.nii.gz`) containing LDCT chest scans
 2. **File List**: Text file containing paths to input images (one per line)
 3. **BIDS Structure**: Input files should follow BIDS naming convention with `sub-` and `ses-` identifiers
 
@@ -56,7 +55,7 @@ docker build -t cvd-risk-estimator .
 /path/to/sub-002/ses-01/anat/sub-002_ses-01_ct.nii.gz
 ```
 
-### Local Usage
+## Local Usage
 
 ```bash
 python pred_batch_updated_map.py \
@@ -66,7 +65,7 @@ python pred_batch_updated_map.py \
     --cuda-device 0
 ```
 
-### Docker Usage (Recommended)
+## Docker Usage (Recommended)
 
 ```bash
 docker run --gpus all \
@@ -80,7 +79,7 @@ docker run --gpus all \
     --cuda-device 0
 ```
 
-#### Testing GPU Access
+### Testing GPU Access
 ```bash
 # Test CUDA availability in container
 docker run --gpus all -it --entrypoint="/bin/bash" cvd-risk-estimator
@@ -112,7 +111,7 @@ output_dir/
 └── cvd-risk-score.log                                # Processing log
 ```
 
-### Output Files Explained
+## Output Files Explained
 
 - **`*_desc-cvdr.txt`**: Contains the estimated CVD risk score, a real number in \[0, 1\] indicating the estimated CVD risk.
 - **`*_desc-heartslices.txt`**: First and last slice indices where heart was detected
@@ -127,13 +126,12 @@ The application includes robust error handling:
 - **Processing errors** are captured and logged while continuing with remaining files
 - **Failed cases** still generate output files with error status for tracking
 
-### Modified Components
+# Modified Components
 Some scripts that were in the colab_support originally (`bbox_cut.py`, `image.py`) have been edited and copied in the project directory in order to make the script run.
 Also the retinanet checkpoint has been downloaded manually and copied here.
 - `bbox_cut.py`, `image.py`: Adapted from original colab_support for standalone operation
 - `heart_detect.py`: Integrated RetinaNet model for automated heart localization
 - `pred_batch_updated_map.py`: Main processing script with BIDS compliance and error handling
-
 
 # Attribution
 ## Tri2D-Net for CVD Risk Estimation
