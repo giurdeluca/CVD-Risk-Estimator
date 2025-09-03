@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
-# @Author  : Giulia
-# @Time    : 2023/5/7
+# @Author  : chq_N
+# @Time    : 2020/10/28
 import cv2
 import numpy as np
 import torch
