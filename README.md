@@ -6,6 +6,8 @@ This application processes CT images in NIfTI format (`.nii.gz`) to:
 4. **Generate grad-CAM visualizations** for model interpretability
 5. **Output results in BIDS-compliant structure**
 
+## Performance
+5s per image with a peak of 15GB GPU RAM on L40S.
 
 
 # Installation

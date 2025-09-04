@@ -2,3 +2,5 @@ NLST-Tri2DNet_True_0.0001_16-00700-encoder.ptm
 retinanet_heart.pt
 demo-data
 test*
+*_list.txt
+results*

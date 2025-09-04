@@ -1,3 +1,4 @@
+# to ensure compatibility with python 3.8
 FROM continuumio/miniconda3:4.10.3
 RUN conda update conda
 RUN conda install python=3.8 -y
