@@ -4,7 +4,7 @@ This application processes CT images in NIfTI format (`.nii.gz`) to:
 2. **Extract heart slices** and create visual detection outputs
 3. **Compute CVD risk scores** using a trained deep learning model
 4. **Generate grad-CAM visualizations** for model interpretability
-5. **Output results in BIDS-compliant structure**
+5. **Output results in BIDS-compliant structure (and a csv with all the scores)**
 
 ## Performance
 5s per image with a peak of 15GB GPU RAM on L40S.
@@ -64,7 +64,8 @@ python pred_batch_updated_map.py \
     --input-list file_paths.txt \
     --output-dir results/ \
     --iter 700 \
-    --cuda-device 0
+    --cuda-device 0 \
+    --save-maps 
 ```
 
 ## Docker Usage (Recommended)
@@ -78,7 +79,9 @@ docker run --gpus all \
     --input-list /app/file_paths.txt \
     --output-dir /app/output \
     --iter 700 \
-    --cuda-device 0
+    --cuda-device 0 \
+    --save-maps
+
 ```
 
 ### Testing GPU Access
@@ -96,6 +99,8 @@ python -c "import torch; print(f'CUDA available: {torch.cuda.is_available()}')"
 | `--output-dir` | `derived/pipeline/` | Directory to save output files |
 | `--iter` | `700` | Model checkpoint iteration to load |
 | `--cuda-device` | `0` | CUDA device ID to use for inference |
+| `--save-maps` | False | If added, saves gradmaps and heartdetect mosaic |
+
 
 ## Output Structure
 
