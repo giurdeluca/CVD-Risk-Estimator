@@ -60,7 +60,7 @@ docker build -t cvd-risk-estimator .
 ## Local Usage
 
 ```bash
-python pred_batch_updated_map.py \
+python cvdrisk_BIDS.py \
     --input-list file_paths.txt \
     --output-dir results/ \
     --iter 700 \
@@ -138,7 +138,7 @@ Some scripts that were in the colab_support originally (`bbox_cut.py`, `image.py
 Also the retinanet checkpoint has been downloaded manually and copied here.
 - `bbox_cut.py`, `image.py`: Adapted from original colab_support for standalone operation
 - `heart_detect.py`: Integrated RetinaNet model for automated heart localization
-- `pred_batch_updated_map.py`: Main processing script with BIDS compliance and error handling
+- `cvdrisk_BIDS.py`: Main processing script with BIDS compliance and error handling
 
 # Attribution
 ## Tri2D-Net for CVD Risk Estimation

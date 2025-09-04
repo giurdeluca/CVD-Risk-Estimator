@@ -15,4 +15,4 @@ WORKDIR /cvd-risk-estimator
 COPY . .
 RUN mkdir -p input output
 
-ENTRYPOINT ["python3", "pred_batch_updated_map.py"]
+ENTRYPOINT ["python3", "cvdrisk_BIDS.py"]
