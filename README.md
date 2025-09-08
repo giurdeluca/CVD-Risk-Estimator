@@ -1,3 +1,5 @@
+> Check [README_original](README_original.md) for further documentation and citation!
+
 # Overview
 This application processes CT images in NIfTI format (`.nii.gz`) to:
 1. **Detect and localize the heart** using automated bounding box detection
